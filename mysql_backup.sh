@@ -61,7 +61,7 @@ fi;
 ###########################
 
 
-FINAL_BACKUP_DIR=$BACKUP_DIR"`date +\%Y\%m\%d\-\%H\%m`/"
+FINAL_BACKUP_DIR=$BACKUP_DIR"`date +\%Y\%m\%d\-\%k\%M`/"
 
 echo "Making backup directory in $FINAL_BACKUP_DIR"
 
