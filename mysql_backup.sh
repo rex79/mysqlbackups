@@ -50,6 +50,11 @@ if [ ! $USERNAME ]; then
   USERNAME="root"
 fi;
 
+# Make sure we have a password for make the backup
+if [ ! $PASSWORD ]; then
+  echo "This script must be run with a password for user $BACKUP_USER. Exiting." 1>&2
+  exit 1;
+fi;
 
 ###########################
 #### START THE BACKUPS ####
@@ -77,7 +82,7 @@ if [ $ENABLE_GLOBALS_BACKUPS = "yes" ]
 then
   echo "Globals backup"
 
-  if ! mysqldump -u "$USERNAME" -p -A -R -E --triggers --single-transaction | gzip > $FINAL_BACKUP_DIR"globals".sql.gz.in_progress; then
+  if ! mysqldump -u "$USERNAME" -p"$PASSWORD" -A -R -E --triggers --single-transaction | gzip > $FINAL_BACKUP_DIR"globals".sql.gz.in_progress; then
     echo "[!!ERROR!!] Failed to produce globals backup" 1>&2
   else
     mv $FINAL_BACKUP_DIR"globals".sql.gz.in_progress $FINAL_BACKUP_DIR"globals".sql.gz
